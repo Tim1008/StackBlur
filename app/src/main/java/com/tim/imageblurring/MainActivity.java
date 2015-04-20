@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tim.blur.FastBlur;
 
@@ -17,11 +18,12 @@ public class MainActivity extends ActionBarActivity {
 
     ImageView mBG;
     ImageView mBlur;
-
+    TextView mTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTime = (TextView) findViewById(R.id.tv_time);
         mBG = (ImageView) findViewById(R.id.imag_bg);
         mBG.setImageResource(R.mipmap.picture);
         mBG.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -94,5 +96,6 @@ public class MainActivity extends ActionBarActivity {
         overlay = FastBlur.doBlurJniArray(overlay, (int) radius, true);
         mBlur.setBackgroundDrawable(new BitmapDrawable(overlay));
         Log.d(this.getClass().getSimpleName(), System.currentTimeMillis() - startMs + "ms");
+        mTime.setText("模糊用时 : "+ (System.currentTimeMillis() - startMs) + "ms");
     }
 }
